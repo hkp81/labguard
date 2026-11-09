@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LabGuard — Enterprise Laboratory Equipment Maintenance, Facility Tracking, Calibration, and Compliance Verification System for LPU UMS." />
+  <meta name="author" content="Harshit Kumar (Reg No: 12608404)" />
+  
+  <title>LabGuard — LPU UMS Laboratory Maintenance & Compliance Portal</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. LABORATORY MAINTENANCE PORTAL HEADER
+       ======================================================================== -->
+  <header class="ums-header">
+    <div class="ums-logo-group">
+      <div class="ums-brand-badge">
+        <span class="lab-logo-icon" aria-hidden="true">🛡️</span>
+        <span>LabGuard</span>
+      </div>
+      <div class="ums-logo-text">
+        LABORATORY MAINTENANCE &amp;<br />FACILITY MANAGEMENT PORTAL
+      </div>
+    </div>
+
+    <!-- Center Search Pill -->
+    <div class="header-search-wrapper">
+      <span class="header-search-icon" aria-hidden="true">🔍</span>
+      <input 
+        type="text" 
+        class="header-search-pill" 
+        id="global-search-pill"
+        placeholder="Search equipment ID, laboratory rooms, calibration logs..." 
+        aria-label="Search Laboratory Systems"
+      />
+    </div>
+
+    <!-- Right Icons & Profile -->
+    <div class="header-user-section">
+      <!-- Direct Emergency Dispatch Hotline -->
+      <a href="tel:+918005550199" class="emergency-hotline-pill" title="24/7 Facility Emergency Dispatch">
+        <span>🚨</span>
+        <span class="hotline-text">Dispatch: Ext. 204</span>
+      </a>
+
+      <button class="header-icon-btn" id="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+        <span>🌙</span>
+      </button>
+
+      <!-- Active Equipment Alerts Bell with Interactive Popover -->
+      <div class="notifications-wrapper" style="position: relative;">
+        <button class="header-icon-btn" id="btn-notifications" title="Active Equipment Alerts" aria-label="Active Equipment Alerts" aria-expanded="false">
+          <span>🔔</span>
+          <span class="notification-badge" id="header-notif-count">3</span>
+        </button>
+
+        <!-- Notification Popover Card -->
+        <div class="notifications-dropdown glass-card" id="notifications-dropdown" aria-hidden="true">
+          <div class="notif-dropdown-header">
+            <div class="notif-header-title">
+              <strong>Active Equipment Alerts</strong>
+              <span class="badge badge-primary" id="notif-dropdown-count">3 Active</span>
+            </div>
+            <button class="notif-close-mini" id="notif-close-btn" aria-label="Close notification panel">&times;</button>
+          </div>
+
+          <div class="notif-items-list" id="notif-items-list">
+            <!-- Dynamically populated by app.js -->
+          </div>
+
+          <div class="notif-dropdown-footer">
+            <button class="btn-see-more-tickets" id="btn-see-more-tickets">
+              <span>See More &amp; View All Active Tickets</span>
+              <span class="see-more-arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Profile Pill & Login / Switch Role Trigger -->
+      <div class="user-profile-pill" id="header-user-profile-btn" role="button" tabindex="0" title="Click to Switch Role or Sign In (Student, Technician, Management, Admin)">
+        <div class="user-avatar" id="header-user-avatar">HK</div>
+        <div class="user-meta-header">
+          <span class="user-name" id="header-user-name">Harshit Kumar</span>
+          <span class="user-role-tag" id="header-user-role">Student Researcher</span>
+        </div>
+        <span class="switch-role-badge">Switch ▾</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       3. LABORATORY-FOCUSED SUB-NAVIGATION BAR (Interactive Dropdowns)
+       ======================================================================== -->
+  <nav class="sub-nav-bar" aria-label="Laboratory Infrastructure Navigation">
+    <ul class="sub-nav-links" id="sub-nav-interactive-list">
+      <!-- 1. Lab Facilities & Rooms -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-equipment" class="sub-nav-link" data-action="switch-tab" data-tab="tab-equipment">
+          <span>🔬</span> Lab Facilities &amp; Rooms <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">RESEARCH BLOCKS &amp; LABS</div>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="Bio-Tech Lab 38-204">
+            <span class="status-dot dot-green"></span> Bio-Tech Lab 38-204 (Block 38)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="Life Sciences Lab 34-102">
+            <span class="status-dot dot-green"></span> Life Sciences Lab 34-102 (Block 34)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="Nanotech Research Lab 28-301">
+            <span class="status-dot dot-green"></span> Nanotech Research Lab 28-301 (Block 28)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="Organic Chemistry Lab 38-105">
+            <span class="status-dot dot-orange"></span> Organic Chemistry Lab 38-105 (Block 38)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="Advanced Robotics & Mechatronics 39-001">
+            <span class="status-dot dot-orange"></span> Advanced Robotics &amp; Mechatronics 39-001
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-lab" data-lab="VLSI & Embedded Systems Lab 37-202">
+            <span class="status-dot dot-green"></span> VLSI &amp; Embedded Systems 37-202
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#tab-equipment" class="dropdown-item dropdown-view-all" data-action="switch-tab" data-tab="tab-equipment">
+            View All Laboratory Instruments →
+          </a>
+        </div>
+      </li>
+
+      <!-- 2. Equipment & Calibration -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-equipment" class="sub-nav-link" data-action="switch-tab" data-tab="tab-equipment">
+          <span>⚙️</span> Equipment &amp; Calibration <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">INSTRUMENTS &amp; METROLOGY</div>
+          <a href="#tab-equipment" class="dropdown-item" data-action="switch-tab" data-tab="tab-equipment">
+            <span>🔬</span> Master Equipment Registry
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-health" data-health="maintenance">
+            <span>⚠️</span> Instruments Requiring Maintenance
+          </a>
+          <a href="#tab-history" class="dropdown-item" data-action="switch-tab" data-tab="tab-history">
+            <span>📜</span> Machine Calibration Logs &amp; Audit Trail
+          </a>
+        </div>
+      </li>
+
+      <!-- 3. Maintenance Work Orders -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-tickets" class="sub-nav-link" data-action="switch-tab" data-tab="tab-tickets">
+          <span>📋</span> Maintenance Work Orders <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">WORK ORDER WORKFLOW</div>
+          <a href="#tab-tickets" class="dropdown-item" data-action="filter-status" data-status="All">
+            <span>🎫</span> All Active Work Orders
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-priority" data-priority="Critical">
+            <span>🔴</span> Critical Safety &amp; Stoppage Incidents
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-status" data-status="In Progress">
+            <span>⚡</span> In Progress Repairs
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#tab-report" class="dropdown-item dropdown-view-all" data-action="switch-tab" data-tab="tab-report">
+            <span>➕</span> Report a New Malfunction →
+          </a>
+        </div>
+      </li>
+
+      <!-- 4. Technician Duty Roster -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-tickets" class="sub-nav-link" data-action="switch-tab" data-tab="tab-tickets">
+          <span>🔧</span> Technician Duty Roster <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">CERTIFIED ENGINEERING STAFF</div>
+          <a href="#" class="dropdown-item" data-action="filter-tech" data-tech="Er. Rajesh Sharma">
+            <span>👤</span> Er. Rajesh Sharma (Lead Bio-Medical Eng)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-tech" data-tech="Er. Anita Rao">
+            <span>👤</span> Er. Anita Rao (Optics &amp; Metrology)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-tech" data-tech="Er. Vikram Singh">
+            <span>👤</span> Er. Vikram Singh (Robotics &amp; Mechatronics)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-tech" data-tech="Er. Pooja Verma">
+            <span>👤</span> Er. Pooja Verma (Containment &amp; HVAC)
+          </a>
+          <a href="#" class="dropdown-item" data-action="filter-tech" data-tech="Er. Deepanshu Mehra">
+            <span>👤</span> Er. Deepanshu Mehra (Electronics &amp; Embedded)
+          </a>
+        </div>
+      </li>
+
+      <!-- 5. Safety & ISO Protocols -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-verification" class="sub-nav-link" data-action="switch-tab" data-tab="tab-verification">
+          <span>🛡️</span> Safety &amp; ISO Protocols <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">COMPLIANCE &amp; SAFETY VERIFICATION</div>
+          <a href="#tab-verification" class="dropdown-item" data-action="switch-tab" data-tab="tab-verification">
+            <span>✍</span> Triple-Check Closure Sign-off Form
+          </a>
+          <a href="#tab-history" class="dropdown-item" data-action="switch-tab" data-tab="tab-history">
+            <span>🦺</span> ISO/IEC 17025 Standard Operating Procedures
+          </a>
+          <a href="tel:+918005550199" class="dropdown-item">
+            <span>🚨</span> 24/7 Facility Emergency Protocol (+91 800-555-0199)
+          </a>
+        </div>
+      </li>
+
+      <!-- 6. Compliance & Audit Logs -->
+      <li class="sub-nav-item has-dropdown">
+        <a href="#tab-reports" class="sub-nav-link" data-action="switch-tab" data-tab="tab-reports">
+          <span>📊</span> Compliance &amp; Audit Logs <span class="sub-nav-arrow">▼</span>
+        </a>
+        <div class="sub-nav-dropdown glass-card">
+          <div class="dropdown-heading">REGULATORY REPORTS &amp; EXPORTS</div>
+          <a href="#tab-reports" class="dropdown-item" data-action="switch-tab" data-tab="tab-reports">
+            <span>📈</span> Maintenance KPI &amp; Compliance Dashboard
+          </a>
+          <a href="#" class="dropdown-item" data-action="export-csv">
+            <span>📥</span> Export Audit Log to CSV Spreadsheet
+          </a>
+          <a href="#" class="dropdown-item" data-action="print-pdf">
+            <span>🖨️</span> Print / Save Compliance Summary (.PDF)
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="iso-cert-badge" title="Compliant with ISO/IEC 17025 Standards">
+      <span>🏅</span> ISO 17025 Certified Portal
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       4. MAIN WRAPPER
+       ======================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- ======================================================================
+         DUAL HERO CARDS (Split 2-Card Layout from UMS Screenshot)
+         ====================================================================== -->
+    <section class="hero-cards-grid" aria-label="Operator & Portal Information">
+      <!-- Left Card: Dynamic User Details Card (Student, Technician, Management, Administrator) -->
+      <article class="student-details-card glass-card" id="user-details-card">
+        <!-- Rendered dynamically by app.js based on active user -->
+      </article>
+
+      <!-- Right Card: Welcome Harshit Kumar with Beaker Icon -->
+      <article class="welcome-banner-card glass-card">
+        <div class="welcome-text-content">
+          <h1 class="welcome-title" id="welcome-user-title">Welcome Harshit Kumar</h1>
+          <p class="welcome-desc" id="welcome-user-desc">
+            Access LPU's Laboratory Database to discover <strong>equipment</strong>, <strong>software</strong>, and <strong>laboratories</strong> available for academic and research maintenance purposes.
+          </p>
+        </div>
+
+        <div class="welcome-illustration" aria-hidden="true">
+          <!-- Laboratory Beaker SVG -->
+          <svg class="beaker-svg" viewBox="0 0 24 24">
+            <path d="M19 20H5a2 2 0 0 1-2-2L9 4h6l6 14a2 2 0 0 1-2 2z"></path>
+            <line x1="7" y1="14" x2="17" y2="14"></line>
+            <line x1="9" y1="4" x2="9" y2="2"></line>
+            <line x1="15" y1="4" x2="15" y2="2"></line>
+          </svg>
+        </div>
+      </article>
+    </section>
+
+    <!-- ======================================================================
+         5. STICKY / FLOATING CONTEXT KPI METRIC BAR
+         ====================================================================== -->
+    <section class="kpi-summary-bar" aria-label="System Metrics Summary">
+      <div class="kpi-card glass-card">
+        <div class="kpi-icon-box kpi-icon-total">📋</div>
+        <div class="kpi-details">
+          <span class="kpi-value" id="kpi-total-tickets">4</span>
+          <span class="kpi-label">Total Work Orders</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-icon-box kpi-icon-progress">⚡</div>
+        <div class="kpi-details">
+          <span class="kpi-value" id="kpi-in-progress">1</span>
+          <span class="kpi-label">In Progress</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-icon-box kpi-icon-critical">🚨</div>
+        <div class="kpi-details">
+          <span class="kpi-value" id="kpi-critical">1</span>
+          <span class="kpi-label">Critical Alerts</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-icon-box kpi-icon-resolved">✅</div>
+        <div class="kpi-details">
+          <span class="kpi-value" id="kpi-resolved">1</span>
+          <span class="kpi-label">Resolved / Closed</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-icon-box kpi-icon-compliance">🛡️</div>
+        <div class="kpi-details">
+          <span class="kpi-value" id="kpi-compliance">88%</span>
+          <span class="kpi-label">Compliance Index</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. TAB NAVIGATION SYSTEM (UMS Style Underline Tabs)
+         ====================================================================== -->
+    <nav class="ums-tabs-nav-wrapper" aria-label="Laboratory Modules">
+      <ul class="ums-tabs-list" role="tablist">
+        <li role="presentation">
+          <button class="nav-tab-btn active" data-tab="tab-report" role="tab" aria-selected="true">
+            <span>📝</span> 1. Report Issue
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" data-tab="tab-tickets" role="tab" aria-selected="false">
+            <span>🎫</span> 2. Active Tickets &amp; Status
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" data-tab="tab-equipment" role="tab" aria-selected="false">
+            <span>🔬</span> 3. Equipment &amp; Locations
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" data-tab="tab-history" role="tab" aria-selected="false">
+            <span>📜</span> 4. Repair History &amp; Logs
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" data-tab="tab-verification" role="tab" aria-selected="false">
+            <span>✍</span> 5. Closure Verification
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" data-tab="tab-reports" role="tab" aria-selected="false">
+            <span>📊</span> 6. Analytics &amp; Reports
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ======================================================================
+         TAB PANEL 1: ISSUE REPORTING (Matches UMS Form Screenshots)
+         ====================================================================== -->
+    <section id="tab-report" class="tab-panel active" role="tabpanel" aria-label="Issue Reporting">
+      <div class="ums-form-card glass-card">
+        <form id="issue-report-form">
+          <!-- Section 1: Equipment Selection -->
+          <h3 class="form-section-title">
+            <span>🔬</span> Requirement &amp; Equipment Details
+          </h3>
+
+          <!-- Visual Category Quick Tiles -->
+          <div class="eq-cat-tiles-row" id="eq-cat-tiles-filter" role="tablist" aria-label="Filter equipment by category">
+            <button type="button" class="eq-cat-tile active" data-cat="All">All Categories</button>
+            <button type="button" class="eq-cat-tile" data-cat="Sterilization">🌡️ Autoclaves</button>
+            <button type="button" class="eq-cat-tile" data-cat="Centrifugal">🌀 Centrifuges</button>
+            <button type="button" class="eq-cat-tile" data-cat="Spectroscopy">🔬 Spectrophotometers</button>
+            <button type="button" class="eq-cat-tile" data-cat="Containment">💨 Fume Hoods</button>
+            <button type="button" class="eq-cat-tile" data-cat="Robotics">🤖 Robotics</button>
+            <button type="button" class="eq-cat-tile" data-cat="Electronics">⚡ Oscilloscopes</button>
+          </div>
+
+          <div class="form-grid-row">
+            <div class="form-group">
+              <label for="report-equipment" class="form-label">
+                Select Equipment / Instrument <span class="req">*</span>
+              </label>
+              <select id="report-equipment" class="form-select" required>
+                <!-- Populated dynamically by app.js -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="report-category" class="form-label">
+                Maintenance Category
+                <span class="viva-tooltip-trigger" title="Viva helper">?
+                  <span class="viva-tooltip-content">Classifies mechanical, electrical, or sensor calibration domains according to ISO/IEC 17025 standards.</span>
+                </span>
+              </label>
+              <select id="report-category" class="form-select">
+                <option value="Calibration & Sensor">Calibration &amp; Sensor</option>
+                <option value="Chemical Safety & Containment">Chemical Safety &amp; Containment</option>
+                <option value="Mechanical & Drive">Mechanical &amp; Drive</option>
+                <option value="Electrical & Power">Electrical &amp; Power</option>
+                <option value="Robotics & Automation">Robotics &amp; Automation</option>
+                <option value="Optics & Laser">Optics &amp; Laser</option>
+                <option value="General Preventive Maintenance">General Preventive Maintenance</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Section 2: Laboratory Location Details -->
+          <div class="form-grid-row-3">
+            <div class="form-group">
+              <label for="report-lab" class="form-label">Laboratory Room / Hall <span class="req">*</span></label>
+              <input type="text" id="report-lab" class="form-input" placeholder="e.g. Bio-Tech Lab 38-204" required />
+            </div>
+
+            <div class="form-group">
+              <label for="report-block" class="form-label">University Block</label>
+              <input type="text" id="report-block" class="form-input" placeholder="e.g. Block 38" />
+            </div>
+
+            <div class="form-group">
+              <label for="report-title" class="form-label">Issue Summary / Fault Title <span class="req">*</span></label>
+              <input type="text" id="report-title" class="form-input" placeholder="e.g. Pressure sensor reading oscillates irregularly" required />
+            </div>
+          </div>
+
+          <!-- Section 3: Priority Selection (Capsule Pills) -->
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label class="form-label">
+              Incident Severity / Priority Level <span class="req">*</span>
+              <span class="viva-tooltip-trigger" title="Viva helper">?
+                <span class="viva-tooltip-content">SLA Matrix: Critical = 2hr response for safety/stoppages; High = 24hr; Medium = 48hr routine calibration.</span>
+              </span>
+            </label>
+            <div class="priority-pills-row" role="radiogroup" aria-label="Priority Selection">
+              <label class="priority-pill-option" data-priority="Low">
+                <input type="radio" name="ticket-priority" value="Low" />
+                <span>🟢 Low (Minor)</span>
+              </label>
+
+              <label class="priority-pill-option active" data-priority="Medium">
+                <input type="radio" name="ticket-priority" value="Medium" checked />
+                <span>🟡 Medium (Standard)</span>
+              </label>
+
+              <label class="priority-pill-option" data-priority="High">
+                <input type="radio" name="ticket-priority" value="High" />
+                <span>🟠 High (Urgent)</span>
+              </label>
+
+              <label class="priority-pill-option" data-priority="Critical">
+                <input type="radio" name="ticket-priority" value="Critical" />
+                <span>🔴 Critical (Hazard / Stoppage)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 4: Detailed Fault Description with Zero-Typing Quick Symptom Chips -->
+          <div class="form-group" style="margin-bottom: 24px;">
+            <div class="symptom-chips-container">
+              <div class="symptom-chips-label">
+                <span>⚡ 1-Click Fast Symptoms (Click to Auto-Fill):</span>
+              </div>
+              <div class="symptom-chips-wrapper" id="symptom-chips-wrapper">
+                <button type="button" class="symptom-chip" data-title="Chamber Pressure Reading Oscillates" data-desc="Chamber pressure gauge reading oscillates erratically between 1.8 and 2.4 bar during sterilization cycle. Over-temp alarm sounded twice.">
+                  <span>🌡️</span> Pressure/Temp Fluctuation
+                </button>
+                <button type="button" class="symptom-chip" data-title="Low Exhaust Face Velocity Below OSHA Safe Limit" data-desc="Exhaust face velocity dropped below minimum containment limit (<0.35 m/s). Airflow sensor buzzer sounding intermittently.">
+                  <span>💨</span> Low Airflow / Containment
+                </button>
+                <button type="button" class="symptom-chip" data-title="High-Speed Imbalance & Vibration Rumbling" data-desc="Excessive rotor vibration and harmonic resonance detected when exceeding rated operating speeds. Immediate bearing inspection required.">
+                  <span>🔊</span> High Vibration / Noise
+                </button>
+                <button type="button" class="symptom-chip" data-title="Optical Detector Zero-Point Drift" data-desc="Baseline photometric absorbance reading drifts by >0.05 AU within 10 minutes. Tungsten-Halogen lamp calibration required.">
+                  <span>🔬</span> Optical Calibration Drift
+                </button>
+                <button type="button" class="symptom-chip" data-title="Servo Axis Backlash Exceeds Engineering Tolerance" data-desc="Repeatability positioning error detected on rotational joint axis during path execution routine. Gearbox inspection required.">
+                  <span>🤖</span> Axis Positional Deviation
+                </button>
+              </div>
+            </div>
+
+            <label for="report-desc" class="form-label">
+              Detailed Observation / Fault Description <span class="req">*</span>
+            </label>
+            <textarea 
+              id="report-desc" 
+              class="form-textarea" 
+              placeholder="Describe symptoms, error codes, temperature/pressure readings, or abnormal noises observed..." 
+              required
+            ></textarea>
+          </div>
+
+          <!-- Section 5: Reporter Contact Details -->
+          <h3 class="form-section-title">
+            <span>👤</span> Reporter Information
+          </h3>
+
+          <div class="form-grid-row">
+            <div class="form-group">
+              <label for="report-reporter" class="form-label">Reported By</label>
+              <input type="text" id="report-reporter" class="form-input" value="Harshit Kumar (12608404)" />
+            </div>
+
+            <div class="form-group">
+              <label for="report-email" class="form-label">Contact Email</label>
+              <input type="email" id="report-email" class="form-input" value="harshitkochas0123@gmail.com" />
+            </div>
+          </div>
+
+          <!-- Terms & Compliance Checkbox (Matches Screenshot) -->
+          <div class="terms-conditions-box">
+            <h4 class="terms-title">Laboratory Safety &amp; Audit Disclaimer</h4>
+            <p class="terms-text">
+              I undertake that the above fault report is accurate and logged in accordance with LPU Laboratory Safety Guidelines and ISO 17025 maintenance reporting standards.
+            </p>
+            <label class="terms-checkbox-label">
+              <input type="checkbox" id="chk-terms" required checked />
+              <span>I confirm all information is verified and agree to safety audit rules.</span>
+            </label>
+          </div>
+
+          <!-- Submit Pill Button -->
+          <button type="submit" class="btn-primary-pill" id="btn-submit-ticket">
+            Submit Maintenance Ticket
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB PANEL 2: ACTIVE TICKETS, STATUS & TECHNICIAN ASSIGNMENT
+         ====================================================================== -->
+    <section id="tab-tickets" class="tab-panel" role="tabpanel" aria-label="Active Maintenance Tickets">
+      <!-- Search & Multi-Faceted Filters -->
+      <div class="tickets-filter-card glass-card">
+        <div class="filter-bar-grid">
+          <div>
+            <label for="filter-search" class="form-label">Search Work Orders</label>
+            <input type="text" id="filter-search" class="form-input" placeholder="Search by Ticket ID, equipment, reporter..." />
+          </div>
+
+          <div>
+            <label for="filter-status" class="form-label">Status</label>
+            <select id="filter-status" class="form-select">
+              <option value="All">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Pending Parts">Pending Parts</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filter-priority" class="form-label">Priority</label>
+            <select id="filter-priority" class="form-select">
+              <option value="All">All Priorities</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filter-lab" class="form-label">Laboratory</label>
+            <select id="filter-lab" class="form-select">
+              <option value="All">All Laboratories</option>
+            </select>
+          </div>
+
+          <div style="align-self: flex-end;">
+            <button class="btn btn-secondary" id="btn-reset-filters">Reset</button>
+          </div>
+        </div>
+
+        <!-- 1-Click Quick Filter Chips -->
+        <div class="quick-filter-chips-row" id="quick-filter-chips-row">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Quick Filters:</span>
+          <button type="button" class="quick-filter-chip active" data-filter="all">All Tickets</button>
+          <button type="button" class="quick-filter-chip" data-filter="critical">🔴 Critical Stoppages</button>
+          <button type="button" class="quick-filter-chip" data-filter="inprogress">⚡ In Progress</button>
+          <button type="button" class="quick-filter-chip" data-filter="my-tasks">🛠️ Assigned to Me</button>
+          <button type="button" class="quick-filter-chip" data-filter="pending-parts">⏳ Awaiting Parts</button>
+        </div>
+      </div>
+
+      <!-- Header with Count & View Toggle (List vs Kanban) -->
+      <div class="tickets-header-summary">
+        <div class="section-heading-with-badge">
+          <h2>Active Laboratory Work Orders</h2>
+          <span class="count-badge" id="tickets-count-badge">Loading...</span>
+        </div>
+
+        <!-- View Toggle Control -->
+        <div class="view-toggle-group" role="group" aria-label="Work Order View Mode">
+          <button type="button" class="btn-view-toggle active" id="btn-view-list" data-view="list">
+            <span>≡</span> List View
+          </button>
+          <button type="button" class="btn-view-toggle" id="btn-view-kanban" data-view="kanban">
+            <span>⊞</span> Kanban Board
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Tickets Container (List View) -->
+      <div id="tickets-list-container" class="tickets-list-layout">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Dynamic Kanban Board Container (Kanban View) -->
+      <div id="kanban-board-container" class="kanban-board-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB PANEL 3: EQUIPMENT & LOCATION REGISTRY
+         ====================================================================== -->
+    <section id="tab-equipment" class="tab-panel" role="tabpanel" aria-label="Equipment Registry">
+      <div class="equipment-search-bar">
+        <div class="section-heading-with-badge">
+          <h2>University Laboratory Instruments &amp; Facilities</h2>
+        </div>
+        <div style="flex: 0 1 320px;">
+          <input 
+            type="text" 
+            id="equipment-search-input" 
+            class="form-input" 
+            placeholder="Filter machines, serial no, or labs..." 
+          />
+        </div>
+      </div>
+
+      <!-- Equipment Grid -->
+      <div id="equipment-grid-container" class="equipment-grid-layout">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB PANEL 4: REPAIR HISTORY & AUDIT TRAIL
+         ====================================================================== -->
+    <section id="tab-history" class="tab-panel" role="tabpanel" aria-label="Repair History">
+      <div class="history-controls-card glass-card">
+        <label for="history-equipment-select" style="font-weight: 700; white-space: nowrap;">
+          Select Instrument to Inspect:
+        </label>
+        <select id="history-equipment-select" class="form-select">
+          <!-- Populated by app.js -->
+        </select>
+      </div>
+
+      <!-- Selected Machine Hero Card -->
+      <div id="history-machine-info">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Chronological Timeline -->
+      <div class="timeline-container" id="history-timeline-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB PANEL 5: CLOSURE VERIFICATION & SIGN-OFF
+         ====================================================================== -->
+    <section id="tab-verification" class="tab-panel" role="tabpanel" aria-label="Closure Verification">
+      <div class="verification-layout-grid">
+        <!-- Left: Selected Ticket Overview -->
+        <div>
+          <div style="margin-bottom: 16px;">
+            <label for="verification-ticket-select" class="form-label">
+              Select Ticket for Final Inspection &amp; Sign-off:
+            </label>
+            <select id="verification-ticket-select" class="form-select">
+              <!-- Populated by app.js -->
+            </select>
+          </div>
+
+          <div id="verification-ticket-details">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+
+        <!-- Right: Verification Checklist Form -->
+        <div class="verification-form-card glass-card">
+          <h3 class="form-section-title">
+            <span>🛡️</span> Quality Assurance &amp; Safety Sign-off
+            <span class="viva-tooltip-trigger" title="Viva helper">?
+              <span class="viva-tooltip-content">ISO/IEC 17025 Section 7.8 requires formal QA inspector authorization and physical/digital verification before re-certifying metrological equipment.</span>
+            </span>
+          </h3>
+          <p class="text-secondary" style="font-size: 0.88rem; margin-bottom: 18px;">
+            Formal compliance requires triple verification before any instrument is returned to active academic rotation.
+          </p>
+
+          <form id="verification-form">
+            <div class="checklist-group">
+              <label class="checklist-label-card">
+                <input type="checkbox" id="chk-functional-test" required />
+                <div>
+                  <span class="checklist-title">1. Operational &amp; Functional Test Passed</span>
+                  <span class="checklist-desc">All parameters (temperature, pressure, speed, optics) tested within manufacturer specs.</span>
+                </div>
+              </label>
+
+              <label class="checklist-label-card">
+                <input type="checkbox" id="chk-safety-check" required />
+                <div>
+                  <span class="checklist-title">2. Containment &amp; Electrical Safety Passed</span>
+                  <span class="checklist-desc">Interlocks, grounding, emergency cutoffs, and ventilation seals verified intact.</span>
+                </div>
+              </label>
+
+              <label class="checklist-label-card">
+                <input type="checkbox" id="chk-calibration-cert" />
+                <div>
+                  <span class="checklist-title">3. Calibration Certificate Issued &amp; Logged</span>
+                  <span class="checklist-desc">ISO 17025 certificate number filed in University Central Equipment Registry.</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label for="verify-officer-name" class="form-label">Authorized Sign-off Officer</label>
+              <input type="text" id="verify-officer-name" class="form-input" value="Harshit Kumar (Verified Inspector)" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label for="verify-remarks" class="form-label">Inspector Remarks / Certification Notes</label>
+              <textarea id="verify-remarks" class="form-textarea" placeholder="State final calibration readings and authorization for student use..."></textarea>
+            </div>
+
+            <!-- HTML5 Interactive Digital Signature Pad -->
+            <div class="signature-pad-box">
+              <div class="sig-canvas-header">
+                <span class="sig-canvas-title">✍ Authorized Inspector Digital Signature (Draw with mouse/touch):</span>
+                <button type="button" class="btn btn-sm btn-secondary" id="btn-clear-sig">Clear</button>
+              </div>
+              <div class="sig-canvas-frame" id="sig-canvas-frame">
+                <canvas id="signature-canvas" class="sig-canvas-element" width="400" height="130"></canvas>
+                <div class="sig-canvas-hint" id="sig-hint">Draw Signature Here</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-coral btn-block" id="btn-submit-verification">
+              Sign &amp; Permanently Close Ticket
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB PANEL 6: ANALYTICS & COMPLIANCE REPORTS
+         ====================================================================== -->
+    <section id="tab-reports" class="tab-panel" role="tabpanel" aria-label="Maintenance Reports">
+      <!-- 4 KPI Summary Cards -->
+      <div class="reports-kpi-summary" id="reports-kpi-grid">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <!-- Master Report Table Card -->
+      <div class="reports-table-card glass-card">
+        <div class="reports-header-actions">
+          <div class="section-heading-with-badge">
+            <h2>University Laboratory Maintenance Compliance Log</h2>
+          </div>
+          <div class="reports-btn-group">
+            <button class="btn btn-outline" id="btn-print-report">
+              <span>🖨️</span> Print / Save PDF
+            </button>
+            <button class="btn btn-coral" id="btn-export-csv">
+              <span>📥</span> Export to CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Equipment</th>
+                <th>Laboratory</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned Tech</th>
+                <th>Reported Date</th>
+                <th>QA Sign-off</th>
+              </tr>
+            </thead>
+            <tbody id="reports-table-body">
+              <!-- Rendered dynamically by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL 1: ASSIGN TECHNICIAN MODAL
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modal-assign-tech" role="dialog" aria-modal="true" aria-labelledby="assign-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="assign-modal-title">Assign Certified Technician</h3>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+      </div>
+
+      <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: 16px;">
+        Assigning work order: <strong id="assign-modal-ticket-id">TKT-XXXX</strong>
+      </p>
+
+      <form id="form-assign-tech">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="assign-tech-select" class="form-label">Select Technician from Duty Roster</label>
+          <select id="assign-tech-select" class="form-select" required>
+            <!-- Populated by app.js -->
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-coral">Confirm Assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: COMMENTS & NOTES THREAD MODAL
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modal-comments" role="dialog" aria-modal="true" aria-labelledby="comment-modal-ticket-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="comment-modal-ticket-title">Ticket Discussion</h3>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Comments Thread List -->
+      <div class="comments-thread-box" id="modal-comments-list">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Add Comment Form -->
+      <form id="form-add-comment">
+        <div class="form-group" style="margin-bottom: 10px;">
+          <input type="text" id="comment-author-name" class="form-input" value="Harshit Kumar (Student)" placeholder="Your Name / Role" />
+        </div>
+        <div class="form-group" style="margin-bottom: 16px;">
+          <textarea id="comment-input-text" class="form-textarea" style="min-height: 80px;" placeholder="Post maintenance remark or status update..." required></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" data-close-modal>Close</button>
+          <button type="submit" class="btn btn-coral">Post Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: LOGIN & ROLE SWITCH INTERFACE (4 LABORATORY USER ROLES)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modal-auth-login" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+    <div class="modal-card modal-card-large">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="login-modal-title">Laboratory Portal Authentication</h3>
+          <p class="text-secondary" style="font-size: 0.85rem; margin-top: 2px;">
+            Select one of the 4 university laboratory user roles or enter credentials to sign in.
+          </p>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- 4 Role Selector Cards -->
+      <div class="role-selector-grid" id="role-selector-grid">
+        <!-- 1. Student -->
+        <div class="role-card active" data-role="student">
+          <div class="role-card-badge">Active</div>
+          <div class="role-card-avatar" style="background: linear-gradient(135deg, #F97316 0%, #3B82F6 100%);">HK</div>
+          <div class="role-card-info">
+            <h4 class="role-card-name">Harshit Kumar</h4>
+            <div class="role-card-role">🎓 Student Researcher</div>
+            <div class="role-card-meta">Reg: 12608404 &bull; B.Tech CSE</div>
+          </div>
+          <button class="btn btn-sm btn-coral btn-switch-role" data-role="student">Active</button>
+        </div>
+
+        <!-- 2. Technician / Engineer / Employee -->
+        <div class="role-card" data-role="technician">
+          <div class="role-card-badge" style="display:none;">Active</div>
+          <div class="role-card-avatar" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">RS</div>
+          <div class="role-card-info">
+            <h4 class="role-card-name">Er. Rajesh Sharma</h4>
+            <div class="role-card-role">🔧 Technician / Engineer</div>
+            <div class="role-card-meta">EMP-ENG-402 &bull; Bio-Medical Tech</div>
+          </div>
+          <button class="btn btn-sm btn-outline btn-switch-role" data-role="technician">Switch</button>
+        </div>
+
+        <!-- 3. Management / Lab Incharge -->
+        <div class="role-card" data-role="management">
+          <div class="role-card-badge" style="display:none;">Active</div>
+          <div class="role-card-avatar" style="background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);">NV</div>
+          <div class="role-card-info">
+            <h4 class="role-card-name">Dr. Neha Verma</h4>
+            <div class="role-card-role">📋 Laboratory Management</div>
+            <div class="role-card-meta">FAC-BIO-819 &bull; Facility Director</div>
+          </div>
+          <button class="btn btn-sm btn-outline btn-switch-role" data-role="management">Switch</button>
+        </div>
+
+        <!-- 4. System Administrator -->
+        <div class="role-card" data-role="administrator">
+          <div class="role-card-badge" style="display:none;">Active</div>
+          <div class="role-card-avatar" style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);">VS</div>
+          <div class="role-card-info">
+            <h4 class="role-card-name">Er. Vikramaditya Sen</h4>
+            <div class="role-card-role">🛡️ System Administrator</div>
+            <div class="role-card-meta">ADM-SYS-001 &bull; Master Root Admin</div>
+          </div>
+          <button class="btn btn-sm btn-outline btn-switch-role" data-role="administrator">Switch</button>
+        </div>
+      </div>
+
+      <!-- Credential Simulation Form -->
+      <div class="login-manual-section">
+        <div class="login-divider-heading"><span>OR SIGN IN WITH UNIVERSITY CREDENTIALS</span></div>
+        <form id="form-login-manual">
+          <div class="form-grid-row">
+            <div class="form-group">
+              <label for="login-username" class="form-label">Username / Registration No. / ID</label>
+              <input type="text" id="login-username" class="form-input" placeholder="e.g. 12608404, harshit.student, rajesh.tech" required />
+            </div>
+            <div class="form-group">
+              <label for="login-password" class="form-label">Password</label>
+              <div class="password-input-wrapper">
+                <input type="password" id="login-password" class="form-input" placeholder="••••••••" value="lpu@2026" required />
+                <button type="button" class="btn-password-toggle" id="btn-toggle-password" title="Show or hide password" aria-label="Toggle password visibility">
+                  <span id="password-toggle-icon">👁️</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1-Click Demo Credential Quick Fills -->
+          <div class="login-quick-creds-container">
+            <span class="quick-creds-label">⚡ 1-Click Fill Official Credentials:</span>
+            <div class="quick-creds-pills">
+              <button type="button" class="btn-cred-chip" data-user="12608404" data-role="student">🎓 Student (12608404)</button>
+              <button type="button" class="btn-cred-chip" data-user="rajesh.tech" data-role="technician">🔧 Technician (rajesh.tech)</button>
+              <button type="button" class="btn-cred-chip" data-user="neha.management" data-role="management">📋 Management (neha.management)</button>
+              <button type="button" class="btn-cred-chip" data-user="admin.sen" data-role="administrator">🛡️ Admin (admin.sen)</button>
+            </div>
+          </div>
+
+          <div class="modal-actions" style="margin-top: 14px;">
+            <button type="button" class="btn btn-secondary" data-close-modal>Close</button>
+            <button type="submit" class="btn btn-coral">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 4: EQUIPMENT CALIBRATION ASSET TAG & QR PASSPORT
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modal-asset-tag" role="dialog" aria-modal="true" aria-labelledby="asset-tag-modal-title">
+    <div class="modal-card modal-card-asset-tag">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="asset-tag-modal-title">Official Equipment Calibration Tag</h3>
+          <p class="text-secondary" style="font-size: 0.85rem; margin-top: 2px;">
+            LPU Metrology &amp; Quality Division &bull; ISO/IEC 17025 Conformity Asset Passport
+          </p>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Printable Sticker Body -->
+      <div class="asset-tag-printable-wrap" id="asset-tag-printable-area">
+        <div class="calibration-asset-sticker">
+          <!-- Top Header Strip -->
+          <div class="asset-sticker-header">
+            <div class="sticker-brand">
+              <span class="sticker-shield">🛡️</span>
+              <div>
+                <strong>LOVELY PROFESSIONAL UNIVERSITY</strong>
+                <small>CENTRAL METROLOGY &amp; INSTRUMENTATION DIVISION</small>
+              </div>
+            </div>
+            <div class="sticker-iso-badge">ISO/IEC 17025</div>
+          </div>
+
+          <!-- Main Sticker Info Grid -->
+          <div class="asset-sticker-body">
+            <div class="sticker-main-details">
+              <div class="sticker-field">
+                <span class="lbl">ASSET ID:</span>
+                <span class="val font-mono highlight" id="tag-eq-id">EQ-38-001</span>
+              </div>
+              <div class="sticker-field">
+                <span class="lbl">INSTRUMENT:</span>
+                <span class="val bold" id="tag-eq-name">Systec Autoclave VX-95</span>
+              </div>
+              <div class="sticker-field">
+                <span class="lbl">SERIAL NO:</span>
+                <span class="val font-mono" id="tag-eq-serial">SN-AUT-9921</span>
+              </div>
+              <div class="sticker-field">
+                <span class="lbl">LAB LOCATION:</span>
+                <span class="val" id="tag-eq-lab">Bio-Tech Lab 38-204 (Block 38)</span>
+              </div>
+              <div class="sticker-field">
+                <span class="lbl">OWNER / DEPT:</span>
+                <span class="val" id="tag-eq-dept">Biotechnology &amp; Bioengineering</span>
+              </div>
+            </div>
+
+            <!-- QR Code & Barcode Visual -->
+            <div class="sticker-qr-section">
+              <div class="sticker-qr-box" id="tag-qr-box">
+                <!-- Inline SVG QR Code representation -->
+                <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="84" height="84" fill="#FFFFFF" />
+                  <rect x="6" y="6" width="22" height="22" fill="#0F172A" rx="3" />
+                  <rect x="10" y="10" width="14" height="14" fill="#FFFFFF" />
+                  <rect x="13" y="13" width="8" height="8" fill="#0F172A" />
+
+                  <rect x="56" y="6" width="22" height="22" fill="#0F172A" rx="3" />
+                  <rect x="60" y="10" width="14" height="14" fill="#FFFFFF" />
+                  <rect x="63" y="13" width="8" height="8" fill="#0F172A" />
+
+                  <rect x="6" y="56" width="22" height="22" fill="#0F172A" rx="3" />
+                  <rect x="10" y="60" width="14" height="14" fill="#FFFFFF" />
+                  <rect x="13" y="63" width="8" height="8" fill="#0F172A" />
+
+                  <rect x="34" y="8" width="5" height="5" fill="#0F172A" />
+                  <rect x="42" y="8" width="5" height="5" fill="#0F172A" />
+                  <rect x="34" y="18" width="5" height="5" fill="#0F172A" />
+                  <rect x="46" y="22" width="5" height="5" fill="#0F172A" />
+                  <rect x="8" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="18" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="28" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="38" y="34" width="8" height="8" fill="#0F172A" />
+                  <rect x="52" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="64" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="74" y="36" width="5" height="5" fill="#0F172A" />
+                  <rect x="36" y="48" width="5" height="5" fill="#0F172A" />
+                  <rect x="46" y="48" width="5" height="5" fill="#0F172A" />
+                  <rect x="36" y="58" width="5" height="5" fill="#0F172A" />
+                  <rect x="48" y="62" width="5" height="5" fill="#0F172A" />
+                  <rect x="60" y="58" width="5" height="5" fill="#0F172A" />
+                  <rect x="70" y="64" width="5" height="5" fill="#0F172A" />
+                  <rect x="64" y="72" width="5" height="5" fill="#0F172A" />
+                </svg>
+              </div>
+              <span class="qr-label">Scan to Inspect</span>
+            </div>
+          </div>
+
+          <!-- Calibration Status Band -->
+          <div class="asset-sticker-dates">
+            <div>
+              <span class="date-lbl">CALIBRATION DATE:</span>
+              <strong id="tag-cal-date">2026-10-15</strong>
+            </div>
+            <div>
+              <span class="date-lbl">NEXT EXPIRY DUE:</span>
+              <strong id="tag-exp-date" style="color: #059669;">2027-10-15</strong>
+            </div>
+            <div>
+              <span class="date-lbl">SAFETY STATUS:</span>
+              <span class="sticker-badge badge-green" id="tag-status">CERTIFIED SAFE</span>
+            </div>
+          </div>
+
+          <!-- Bottom Barcode & Verification Seal -->
+          <div class="asset-sticker-footer">
+            <div class="barcode-graphic">
+              <!-- High-density simulated Code-128 SVG Barcode -->
+              <svg width="220" height="28" viewBox="0 0 220 28" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="7" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="12" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="18" y="0" width="1" height="22" fill="#0F172A"/>
+                <rect x="22" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="27" y="0" width="5" height="22" fill="#0F172A"/>
+                <rect x="35" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="40" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="47" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="52" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="58" y="0" width="1" height="22" fill="#0F172A"/>
+                <rect x="62" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="69" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="74" y="0" width="5" height="22" fill="#0F172A"/>
+                <rect x="82" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="87" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="93" y="0" width="1" height="22" fill="#0F172A"/>
+                <rect x="97" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="104" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="110" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="115" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="122" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="127" y="0" width="5" height="22" fill="#0F172A"/>
+                <rect x="135" y="0" width="1" height="22" fill="#0F172A"/>
+                <rect x="139" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="146" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="151" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="157" y="0" width="5" height="22" fill="#0F172A"/>
+                <rect x="165" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="170" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="177" y="0" width="1" height="22" fill="#0F172A"/>
+                <rect x="181" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="187" y="0" width="5" height="22" fill="#0F172A"/>
+                <rect x="195" y="0" width="2" height="22" fill="#0F172A"/>
+                <rect x="200" y="0" width="4" height="22" fill="#0F172A"/>
+                <rect x="207" y="0" width="3" height="22" fill="#0F172A"/>
+                <rect x="213" y="0" width="2" height="22" fill="#0F172A"/>
+                <text x="110" y="27" font-family="monospace" font-size="8" fill="#475569" text-anchor="middle" id="tag-barcode-text">*EQ-38-001*</text>
+              </svg>
+            </div>
+            <div class="sticker-stamp">
+              <span class="stamp-circle">✓ QA CERTIFIED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-actions" style="margin-top: 18px;">
+        <button type="button" class="btn btn-secondary" data-close-modal>Close</button>
+        <button type="button" class="btn btn-coral" id="btn-print-asset-sticker">
+          <span>🖨️</span> Print Asset Tag / Sticker
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING ACTION BUTTONS (Smooth Navigation & Demo Controls)
+       ======================================================================== -->
+  <aside class="fab-container" aria-label="Page Quick Navigation">
+    <!-- Scroll to Top (Bottom-to-Top Arrow) -->
+    <button class="fab-btn fab-scroll" id="fab-scroll-top" title="Scroll to Top (Bottom to Top)" aria-label="Scroll to Top">
+      <span>↑</span>
+    </button>
+    <!-- Scroll to Bottom (Top-to-Bottom Arrow) -->
+    <button class="fab-btn fab-scroll" id="fab-scroll-bottom" title="Scroll to Bottom (Top to Bottom)" aria-label="Scroll to Bottom">
+      <span>↓</span>
+    </button>
+    <!-- Settings / Reset Demo Data -->
+    <button class="fab-btn fab-secondary" id="fab-reset-demo" title="Reset Demo Data" aria-label="Reset Demo Data to Defaults">
+      <span>⚙️</span>
+    </button>
+  </aside>
+
+  <!-- ========================================================================
+       TOAST NOTIFICATION CONTAINER
+       ======================================================================== -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       SCRIPTS: MODULAR REPOSITORY DATA LAYER & APPLICATION CONTROLLER
+       ======================================================================== -->
+  <script src="dataService.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
