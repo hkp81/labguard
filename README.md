@@ -45,12 +45,12 @@ No build tools. No npm. No external dependencies of any kind.
 
 How to Run
 
-Clone or download the repository, then open labguard.html directly in any modern browser.
+Clone or download the repository, then open index.html directly in any modern browser. The live site is hosted on GitHub Pages at https://hkp81.github.io/labguard/.
 
 bash
 git clone https://github.com/YOUR_USERNAME/labguard.git
 cd labguard
-# Open labguard.html in Chrome, Edge, or Firefox
+# Open index.html in Chrome, Edge, or Firefox
 
 Alternatively, use the Live Server extension in VS Code for a local dev server experience.
 
@@ -62,6 +62,7 @@ Management	manager	mgmt123
 Admin	admin	admin123
 Project Structure
 labguard/
+├── index.html         # GitHub Pages entry point
 ├── labguard.html       # Application shell, all tabs and modals
 ├── styles.css          # All styles including dark mode and print layout
 ├── app.js              # Rendering engine, event handlers, UI state
